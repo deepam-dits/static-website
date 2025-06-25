@@ -20,19 +20,21 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install and Run SonarScanner
+          name: Install and Run SonarScanner (inline config)
           command: |
             sudo apt-get update && sudo apt-get install -y unzip
             curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
             unzip sonar-scanner.zip
             export PATH="$PATH:$PWD/sonar-scanner-5.0.1.3006-linux/bin"
+
             sonar-scanner \
               -Dsonar.projectKey=deepam-dits \
               -Dsonar.organization=deepam-dits \
+              -Dsonar.host.url=https://sonarcloud.io \
               -Dsonar.sources=js \
               -Dsonar.exclusions="css/**,images/**,**/*.html" \
-              -Dsonar.host.url=https://sonarcloud.io \
               -Dsonar.login=$SONAR_TOKEN
+
 
 
   deploy:
