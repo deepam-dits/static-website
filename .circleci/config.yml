@@ -3,7 +3,7 @@ version: 2.1
 executors:
   ubuntu-executor:
     docker:
-      - image: cimg/node:18.17  # Ubuntu + Node.js
+      - image: cimg/node:18.17
     working_directory: ~/repo
 
 jobs:
@@ -15,33 +15,19 @@ jobs:
           name: Build (No-op for static site)
           command: echo "No build step needed"
 
-  # sonarcloud-analysis:
-  #   executor: ubuntu-executor
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Install SonarScanner
-  #         command: |
-  #           sudo apt-get update && sudo apt-get install -y unzip
-  #           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-  #           unzip sonar-scanner.zip
-  #           # export PATH="$PATH:$PWD/sonar-scanner-5.0.1.3006-linux/bin"  
-  #           # sonar-scanner -Dsonar.login=$SONAR_TOKEN
-  #           ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -Dsonar.login=$SONAR_TOKEN
-
-    sonarcloud-analysis:
-      executor: ubuntu-executor
-      steps:
-        - checkout
-        - run:
-            name: Install and Run SonarScanner
-            command: |
-              set -x  # show all commands
-              DEBIAN_FRONTEND=noninteractive sudo apt-get update
-              sudo apt-get install -y unzip
-              curl -v -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-              unzip sonar-scanner.zip
-              ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -Dsonar.login=$SONAR_TOKEN
+  sonarcloud-analysis:
+    executor: ubuntu-executor
+    steps:
+      - checkout
+      - run:
+          name: Install and Run SonarScanner
+          command: |
+            set -x
+            DEBIAN_FRONTEND=noninteractive sudo apt-get update
+            sudo apt-get install -y unzip
+            curl -v -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+            unzip sonar-scanner.zip
+            ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -Dsonar.login=$SONAR_TOKEN
 
   deploy:
     executor: ubuntu-executor
@@ -49,9 +35,7 @@ jobs:
       - checkout
       - run:
           name: Simulate Deployment
-          command: |
-            echo "Deploying static site..."
-            # Replace this with real deployment (GitHub Pages, S3, Netlify CLI, etc.)
+          command: echo "Deploying static site..."
 
 workflows:
   version: 2
