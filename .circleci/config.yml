@@ -28,10 +28,10 @@ jobs:
             export PATH="$PATH:$PWD/sonar-scanner-5.0.1.3006-linux/bin"
 
             sonar-scanner \
-              -Dsonar.projectKey=deepam-dits \
+              -Dsonar.projectKey=deepam-dits_static-website \
               -Dsonar.organization=deepam-dits \
               -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.branch.name=main \
+              # -Dsonar.branch.name=main \
               -Dsonar.sources=js \
               -Dsonar.exclusions="css/**,images/**,**/*.html" \
               -Dsonar.login=$SONAR_TOKEN
