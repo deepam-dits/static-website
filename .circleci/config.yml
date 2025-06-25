@@ -31,7 +31,6 @@ jobs:
               -Dsonar.projectKey=deepam-dits_static-website \
               -Dsonar.organization=deepam-dits \
               -Dsonar.host.url=https://sonarcloud.io \
-              # -Dsonar.branch.name=main \
               -Dsonar.sources=js \
               -Dsonar.exclusions="css/**,images/**,**/*.html" \
               -Dsonar.login=$SONAR_TOKEN
